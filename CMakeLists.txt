@@ -5,7 +5,7 @@ PROJECT(deviceatlas)
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 #add definitions, compiler switches, etc.
-ADD_DEFINITIONS(-Wall -O2 -g)
+ADD_DEFINITIONS(-Wall -O2)
 
 #list all source files here
 ADD_EXECUTABLE(deviceatlas main.cpp Trie.cpp)
