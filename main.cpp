@@ -1,6 +1,5 @@
 
-//#include "BinaryTree.h";
-#include "Trie.h";
+#include "Trie.h"
 #include <iostream>
 #include <string>
 #include <map>
