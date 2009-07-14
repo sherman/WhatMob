@@ -7,22 +7,15 @@
 #include <map>
 
 
-class b
-{
-	
-};
-
 class object
 {
 public:
 	object() {}
-
-	b i;
 };
 
 int main()
 {
-	object o;
+	object o = object();
 
 	std::string s1("nokia");
 	std::string s2("nok");
@@ -37,6 +30,7 @@ int main()
 
 	if (t)
 		std::cout << t->getObject();
+
 	/*BinaryTree<std::string> tree;
 
 	std::string s1("nokia");

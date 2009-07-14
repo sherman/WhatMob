@@ -46,7 +46,7 @@
 	class Trie
 	{
 		public:
-			Trie() : root_(0) {}
+			Trie() : root_(new TrieNode<T>()) {}
 
 			TrieNode<T> *insert(const std::string&, const T&);
 			TrieNode<T> *find(const std::string&) const;
