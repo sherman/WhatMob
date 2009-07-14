@@ -8,4 +8,4 @@ SET(CMAKE_VERBOSE_MAKEFILE ON)
 ADD_DEFINITIONS(-Wall -O2 -g)
 
 #list all source files here
-ADD_EXECUTABLE(deviceatlas main.cpp SuffixTree.cpp Trie.cpp suffix_tree.c)
+ADD_EXECUTABLE(deviceatlas main.cpp Trie.cpp)

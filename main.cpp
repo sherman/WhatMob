@@ -1,7 +1,6 @@
 
 //#include "BinaryTree.h";
 #include "Trie.h";
-#include "SuffixTree.h";
 #include <iostream>
 #include <string>
 #include <map>
