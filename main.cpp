@@ -11,11 +11,13 @@ class object
 {
 public:
 	object() {}
+
+	inline const int getValue() { return 1; }
 };
 
 int main()
 {
-	object o = object();
+	object o;
 
 	std::string s1("nokia");
 	std::string s2("nok");
@@ -23,13 +25,13 @@ int main()
 	Trie<object> s;
 
 	s.insert(s1, o);
-	//s.insert(s2, o);
+	s.insert(s2, o);
 
-	
 	TrieNode<object> *t = s.find("nokia3230");
 
-	if (t)
-		std::cout << t->getObject();
+	if (t) {
+		std::cout << const_cast<object*>(t->getObject())->getValue();
+	}
 
 	/*BinaryTree<std::string> tree;
 
