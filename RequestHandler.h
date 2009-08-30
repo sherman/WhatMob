@@ -8,7 +8,7 @@ namespace http {
 	namespace server {
 
 	struct Reply;
-	struct Request;
+	struct HttpRequest;
 
 
 	class RequestHandler : private boost::noncopyable
