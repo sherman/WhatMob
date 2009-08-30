@@ -30,7 +30,7 @@ namespace http {
 			service_unavailable		= 503
 		} status;
 
-		std::vector<header> headers;
+		std::vector<HttpHeader> headers;
 		std::string content;
 
 		// Convert the HttpResponse into a vector of buffers. The buffers do not own the
