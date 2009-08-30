@@ -4,14 +4,14 @@
 #include <boost/lexical_cast.hpp>
 #include "MimeTypes.h"
 #include "Reply.h"
-#include "Request.h"
+#include "HttpRequest.h"
 
 namespace http {
 	namespace server {
 
 	RequestHandler::RequestHandler() {/*_*/}
 
-	void RequestHandler::handleRequest(const Request& request, Reply& reply)
+	void RequestHandler::handleRequest(const HttpRequest& request, Reply& reply)
 	{
 		// Implement me!
 	}

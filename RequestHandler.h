@@ -15,7 +15,7 @@ namespace http {
 	{
 	public:
 		explicit RequestHandler();
-		void handleRequest(const Request& request, Reply& reply);
+		void handleRequest(const HttpRequest& request, Reply& reply);
 	private:
 		static bool urlDecode(const std::string& in, std::string& out);
 	};
