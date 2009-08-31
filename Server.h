@@ -1,5 +1,5 @@
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <boost/asio.hpp>
 #include <string>

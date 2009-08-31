@@ -2,8 +2,8 @@
 #include <sstream>
 #include <string>
 #include <boost/lexical_cast.hpp>
-#include "MimeTypes.h"
-#include "Reply.h"
+/*#include "MimeTypes.h"*/
+#include "HttpResponse.h"
 #include "HttpRequest.h"
 
 namespace http {
@@ -11,7 +11,10 @@ namespace http {
 
 	RequestHandler::RequestHandler() {/*_*/}
 
-	void RequestHandler::handleRequest(const HttpRequest& request, Reply& reply)
+	void RequestHandler::handleRequest(
+		const HttpRequest& request,
+		HttpResponse& response
+	)
 	{
 		// Implement me!
 	}

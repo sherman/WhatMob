@@ -12,7 +12,7 @@ namespace http {
 	) :
 		strand_(ioService),
 		socket_(ioService),
-		RequestHandler_(handler) {}
+		requestHandler_(handler) {}
 
 		boost::asio::ip::tcp::socket& Connection::getSocket() {return socket_;}
 
@@ -45,11 +45,11 @@ namespace http {
 				);
 
 				if (result) {
-					requestHandler_.handleRequest(request_, reply_);
+					requestHandler_.handleRequest(request_, response_);
 
 					boost::asio::async_write(
 						socket_,
-						reply_.to_buffers(),
+						response_.toBuffers(),
 						strand_.wrap(
 							boost::bind(
 								&Connection::handleWrite,
@@ -59,11 +59,11 @@ namespace http {
 						)
 					);
 				} else if (!result) {
-					reply_ = Reply::stockReply(Reply::bad_request);
+					response_ = HttpResponse::stockReply(HttpResponse::bad_request);
 
 					boost::asio::async_write(
 						socket_,
-						reply_.to_buffers(),
+						response_.toBuffers(),
 						strand_.wrap(
 							boost::bind(
 								&Connection::handleWrite,

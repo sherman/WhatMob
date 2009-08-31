@@ -1,21 +1,21 @@
-#ifndef CONNECTION_HPP
-#define CONNECTION_HPP
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
-#include "Reply.hpp"
-#include "Request.hpp"
-#include "RequestHandler.hpp"
-#include "RequestParser.hpp"
+#include "HttpResponse.h"
+#include "HttpRequest.h"
+#include "RequestHandler.h"
+#include "HttpRequestParser.h"
 
 namespace http {
 	namespace server {
 
 	class Connection :
-		public boost::enable_shared_from_this<connection>,
+		public boost::enable_shared_from_this<Connection>,
 		private boost::noncopyable
 	{
 	public:
@@ -40,9 +40,9 @@ namespace http {
 		boost::asio::ip::tcp::socket socket_;
 		RequestHandler& requestHandler_;
 		boost::array<char, 8192> buffer_;
-		Request request_;
-		RequestParser requestParser_;
-		Reply reply_;
+		HttpRequest request_;
+		HttpRequestParser requestParser_;
+		HttpResponse response_;
 	};
 
 	typedef boost::shared_ptr<Connection> ConnectionPtr;

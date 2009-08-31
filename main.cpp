@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 {
 	try {
 		if (argc != 5) {
-			std::cerr << "Usage: deviceatlas <address> <port> <threads> <doc_root>\n";
+			std::cerr << "Usage: deviceatlas <address> <port> <threads>\n";
 			std::cerr << "  For IPv4, try:\n";
 			std::cerr << "    receiver 0.0.0.0 80 1 .\n";
 			std::cerr << "  For IPv6, try:\n";
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
 		// Run server in background thread.
 		std::size_t num_threads = boost::lexical_cast<std::size_t>(argv[3]);
-		http::server::Server s(argv[1], argv[2], argv[4], num_threads);
+		http::server::Server s(argv[1], argv[2], num_threads);
 		boost::thread t(boost::bind(&http::server::Server::run, &s));
 
 		// Restore previous signals.

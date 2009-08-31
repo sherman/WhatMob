@@ -1,5 +1,5 @@
-#ifndef REQUEST_HANDLER_HPP
-#define REQUEST_HANDLER_HPP
+#ifndef REQUEST_HANDLER_H
+#define REQUEST_HANDLER_H
 
 #include <string>
 #include <boost/noncopyable.hpp>
@@ -7,7 +7,7 @@
 namespace http {
 	namespace server {
 
-	struct Reply;
+	struct HttpResponse;
 	struct HttpRequest;
 
 
@@ -15,7 +15,7 @@ namespace http {
 	{
 	public:
 		explicit RequestHandler();
-		void handleRequest(const HttpRequest& request, Reply& reply);
+		void handleRequest(const HttpRequest& request, HttpResponse& response);
 	private:
 		static bool urlDecode(const std::string& in, std::string& out);
 	};

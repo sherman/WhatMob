@@ -1,5 +1,5 @@
-#ifndef HTTP_REQUEST_PARSER_HPP
-#define HTTP_REQUEST_PARSER_HPP
+#ifndef HTTP_REQUEST_PARSER_H
+#define HTTP_REQUEST_PARSER_H
 
 #include <boost/logic/tribool.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -36,7 +36,7 @@ namespace http {
 
 	private:
 		// handle next char input
-		boost::tribool consume(request& req, char input);
+		boost::tribool consume(HttpRequest& request, char input);
 
 		static bool isHttpChar(int c);
 

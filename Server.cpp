@@ -27,7 +27,7 @@ namespace http {
 		acceptor_.listen();
 
 		acceptor_.async_accept(
-			newConnection_->socket(),
+			newConnection_->getSocket(),
 			boost::bind(
 				&Server::handleAccept,
 				this,
@@ -69,7 +69,7 @@ namespace http {
 			newConnection_.reset(new Connection(ioService_, requestHandler_));
 
 			acceptor_.async_accept(
-				newConnection_->socket(),
+				newConnection_->getSocket(),
 				boost::bind(
 					&Server::handleAccept,
 					this,

@@ -264,17 +264,17 @@ namespace http {
 			}
 		}
 
-		bool requestuest_parser::isHttpChar(int c)
+		bool HttpRequestParser::isHttpChar(int c)
 		{
 			return c >= 0 && c <= 127;
 		}
 
-		bool requestuest_parser::isControlChar(int c)
+		bool HttpRequestParser::isControlChar(int c)
 		{
 			return (c >= 0 && c <= 31) || (c == 127);
 		}
 
-		bool requestuest_parser::isHttpSpecialChar(int c)
+		bool HttpRequestParser::isHttpSpecialChar(int c)
 		{
 			switch (c) {
 				case '(': case ')': case '<': case '>': case '@':
@@ -287,7 +287,7 @@ namespace http {
 			}
 		}
 
-		bool requestuest_parser::isDigitChar(int c)
+		bool HttpRequestParser::isDigitChar(int c)
 		{
 			return c >= '0' && c <= '9';
 		}
