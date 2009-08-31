@@ -1,4 +1,5 @@
 #include "RequestHandler.h"
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <boost/lexical_cast.hpp>
@@ -16,7 +17,7 @@ namespace http {
 		HttpResponse& response
 	)
 	{
-		// Implement me!
+		std::cout << "// Implement me!" << std::endl;
 	}
 
 	bool RequestHandler::urlDecode(const std::string& in, std::string& out)
