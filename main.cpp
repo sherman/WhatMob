@@ -14,7 +14,7 @@
 int main(int argc, char* argv[])
 {
 	try {
-		if (argc != 5) {
+		if (argc != 4) {
 			std::cerr << "Usage: deviceatlas <address> <port> <threads>\n";
 			std::cerr << "  For IPv4, try:\n";
 			std::cerr << "    receiver 0.0.0.0 80 1 .\n";
