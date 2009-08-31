@@ -122,7 +122,7 @@ namespace HttpResponseMisc {
 		return buffers;
 	}
 
-namespace stockReplies {
+namespace defaultResponses {
 	const char ok[] = "";
 	const char created[] =
 	  "<html>"
@@ -257,14 +257,16 @@ namespace stockReplies {
 	}
 }
 
-	HttpResponse HttpResponse::stockReply(HttpResponse::HttpStatus status)
+	HttpResponse HttpResponse::defaultResponse(HttpResponse::HttpStatus status)
 	{
 		HttpResponse response;
 		response.status = status;
-		response.content = stockReplies::toString(status);
+		response.content = defaultResponses::toString(status);
 		response.headers.resize(2);
 		response.headers[0].name = "Content-Length";
-		response.headers[0].value = boost::lexical_cast<std::string >(response.content.size());
+		response.headers[0].value = boost::lexical_cast<std::string >(
+			response.content.size()
+		);
 		response.headers[1].name = "Content-Type";
 		response.headers[1].value = "text/html";
 

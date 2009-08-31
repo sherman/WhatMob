@@ -38,7 +38,7 @@ namespace http {
 		// not be changed until the write operation has completed.
 		std::vector<boost::asio::const_buffer> toBuffers();
 
-		static HttpResponse stockReply(HttpStatus status);
+		static HttpResponse defaultResponse(HttpStatus status);
 	};
 
 	}

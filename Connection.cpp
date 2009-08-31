@@ -59,7 +59,7 @@ namespace http {
 						)
 					);
 				} else if (!result) {
-					response_ = HttpResponse::stockReply(HttpResponse::bad_request);
+					response_ = HttpResponse::defaultResponse(HttpResponse::bad_request);
 
 					boost::asio::async_write(
 						socket_,
