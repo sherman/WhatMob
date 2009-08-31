@@ -1,35 +1,61 @@
-
-#include "Trie.h"
 #include <iostream>
 #include <string>
-#include <map>
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
+#include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
+#include "Server.h"
 
+#if !defined(_WIN32)
 
-class object
+#include <pthread.h>
+#include <signal.h>
+
+int main(int argc, char* argv[])
 {
-public:
-	object() {}
+	try {
+		if (argc != 5) {
+			std::cerr << "Usage: deviceatlas <address> <port> <threads> <doc_root>\n";
+			std::cerr << "  For IPv4, try:\n";
+			std::cerr << "    receiver 0.0.0.0 80 1 .\n";
+			std::cerr << "  For IPv6, try:\n";
+			std::cerr << "    receiver 0::0 80 1 .\n";
 
-	inline const int getValue() { return 1; }
-};
+			return 1;
+		}
 
-int main()
-{
-	object o;
+		// Block all signals for background thread.
+		sigset_t new_mask;
+		sigfillset(&new_mask);
+		sigset_t old_mask;
+		pthread_sigmask(SIG_BLOCK, &new_mask, &old_mask);
 
-	std::string s1("nokia");
-	std::string s2("nok");
+		// Run server in background thread.
+		std::size_t num_threads = boost::lexical_cast<std::size_t>(argv[3]);
+		http::server::Server s(argv[1], argv[2], argv[4], num_threads);
+		boost::thread t(boost::bind(&http::server::Server::run, &s));
 
-	Trie<object> s;
+		// Restore previous signals.
+		pthread_sigmask(SIG_SETMASK, &old_mask, 0);
 
-	s.insert(s1, o);
-	s.insert(s2, o);
+		// Wait for signal indicating time to shut down.
+		sigset_t wait_mask;
+		sigemptyset(&wait_mask);
+		sigaddset(&wait_mask, SIGINT);
+		sigaddset(&wait_mask, SIGQUIT);
+		sigaddset(&wait_mask, SIGTERM);
+		pthread_sigmask(SIG_BLOCK, &wait_mask, 0);
+		int sig = 0;
+		sigwait(&wait_mask, &sig);
 
-	TrieNode<object> *t = s.find("nokia3230");
-
-	if (t) {
-		std::cout << const_cast<object*>(t->getObject())->getValue();
+		// Stop the server.
+		s.stop();
+		t.join();
+	} catch (std::exception& e) {
+		std::cerr << "exception: " << e.what() << "\n";
 	}
-	
+
 	return 0;
 }
+
+#endif // !defined(_WIN32)
