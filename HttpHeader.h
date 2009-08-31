@@ -8,7 +8,7 @@ namespace http {
 
 	struct HttpHeader
 	{
-		std::string key;
+		std::string name;
 		std::string value;
 	};
 

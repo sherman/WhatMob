@@ -111,12 +111,12 @@ namespace HttpResponseMisc {
 		for (std::size_t i = 0; i < headers.size(); ++i) {
 			HttpHeader& h = headers[i];
 			buffers.push_back(boost::asio::buffer(h.name));
-			buffers.push_back(boost::asio::buffer(misc_strings::nameValueSeparator));
+			buffers.push_back(boost::asio::buffer(HttpResponseMisc::nameValueSeparator));
 			buffers.push_back(boost::asio::buffer(h.value));
-			buffers.push_back(boost::asio::buffer(misc_strings::crlf));
+			buffers.push_back(boost::asio::buffer(HttpResponseMisc::crlf));
 		}
 
-		buffers.push_back(boost::asio::buffer(misc_strings::crlf));
+		buffers.push_back(boost::asio::buffer(HttpResponseMisc::crlf));
 		buffers.push_back(boost::asio::buffer(content));
 
 		return buffers;
