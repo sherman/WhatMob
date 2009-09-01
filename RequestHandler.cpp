@@ -46,12 +46,37 @@ namespace http {
 			return;
 		}
 
+		response.content.append("Model:");
+
+		std::string userAgent = requestPath.substr(5);
+
+		TrieNode<object> *node = prefixesBase_->find(userAgent);
+
+		std::cout << "ua:" << userAgent << std::endl;
+
+		if (node) {
+			std::cout << "ua recognized" << std::endl;
+
+			// FIXME: optimize it ?
+			char buf[32];
+
+			sprintf(
+				buf,
+				"%d",
+				const_cast<object*>(node->getObject())->getValue()
+			);
+
+			response.content.append(buf);
+		} else
+			std::cout << "unknown ua" << std::endl;
+
 		response.status = HttpResponse::ok;
 		response.headers. resize(2);
 		response.headers[0].name = "Content-Length";
-		response.headers[0].value = boost::lexical_cast<std::string>(0);
+		response.headers[0].value =
+			boost::lexical_cast<std::string>(response.content.size());
 		response.headers[1].name = "Content-Type";
-		response.headers[1].value = "plain/text";
+		response.headers[1].value = "text/html";
 	}
 
 	bool RequestHandler::urlDecode(const std::string& in, std::string& out)
