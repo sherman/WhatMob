@@ -19,17 +19,18 @@ namespace http {
 		explicit RequestHandler();
 		void handleRequest(const HttpRequest& request, HttpResponse& response);
 	private:
-		// sample object
-		class object
+		struct Device
 		{
-		public:
-			object() {/*_*/}
-			inline const int getValue() { return 1; }
+			Device() : modelId(0), brandId(0), mobileDevice(false) {/*_*/}
+
+			int modelId;
+			int brandId;
+			bool mobileDevice;
 		};
 
-		typedef Trie<object> ObjectPrefix;
+		typedef Trie<Device> UserAgentPrefix;
 
-		boost::shared_ptr<ObjectPrefix> prefixesBase_;
+		boost::shared_ptr<UserAgentPrefix> prefixesBase_;
 
 		static bool urlDecode(const std::string& in, std::string& out);
 		void initPrefixBase();

@@ -3,14 +3,13 @@
 #include <sstream>
 #include <string>
 #include <boost/lexical_cast.hpp>
-/*#include "MimeTypes.h"*/
 #include "HttpResponse.h"
 #include "HttpRequest.h"
 
 namespace http {
 	namespace server {
 
-	RequestHandler::RequestHandler() :  prefixesBase_(new ObjectPrefix())
+	RequestHandler::RequestHandler() :  prefixesBase_(new UserAgentPrefix())
 	{
 		initPrefixBase();
 	}
@@ -46,11 +45,11 @@ namespace http {
 			return;
 		}
 
-		response.content.append("Model:");
+		response.content.append("Model, Brand, Mobile:");
 
 		std::string userAgent = requestPath.substr(5);
 
-		TrieNode<object> *node = prefixesBase_->find(userAgent);
+		TrieNode<Device> *node = prefixesBase_->find(userAgent);
 
 		std::cout << "ua:" << userAgent << std::endl;
 
@@ -60,10 +59,14 @@ namespace http {
 			// FIXME: optimize it ?
 			char buf[32];
 
+			Device* d = const_cast<Device*>(node->getObject());
+
 			sprintf(
 				buf,
-				"%d",
-				const_cast<object*>(node->getObject())->getValue()
+				"%d, %d, %d",
+				d->modelId,
+				d->brandId,
+				d->mobileDevice
 			);
 
 			response.content.append(buf);
@@ -113,13 +116,16 @@ namespace http {
 	void RequestHandler::initPrefixBase()
 	{
 		// sample data
-		object o;
-		
+		Device d1;
+		d1.modelId			= 1;
+		d1.brandId			= 1;
+		d1.mobileDevice		= true;
+
 		std::string s1("nokia");
 		std::string s2("nok");
 
-		prefixesBase_->insert(s1, o);
-		prefixesBase_->insert(s2, o);
+		prefixesBase_->insert(s1, d1);
+		prefixesBase_->insert(s2, d1);
 	}
 	
 	}
