@@ -10,7 +10,10 @@
 namespace http {
 	namespace server {
 
-	RequestHandler::RequestHandler() {/*_*/}
+	RequestHandler::RequestHandler() :  prefixesBase_(new ObjectPrefix())
+	{
+		initPrefixBase();
+	}
 
 	void RequestHandler::handleRequest(
 		const HttpRequest& request,
@@ -80,6 +83,18 @@ namespace http {
 		}
 
 		return true;
+	}
+
+	void RequestHandler::initPrefixBase()
+	{
+		// sample data
+		object o;
+		
+		std::string s1("nokia");
+		std::string s2("nok");
+
+		prefixesBase_->insert(s1, o);
+		prefixesBase_->insert(s2, o);
 	}
 	
 	}
