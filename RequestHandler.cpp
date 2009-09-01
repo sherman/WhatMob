@@ -17,7 +17,38 @@ namespace http {
 		HttpResponse& response
 	)
 	{
-		std::cout << "// Implement me!" << std::endl;
+		std::string requestPath;
+
+		if (!urlDecode(request.uri, requestPath)) {
+			std::cout << "decode error" << std::endl;
+			response = HttpResponse::defaultResponse(HttpResponse::bad_request);
+			return;
+		}
+
+		// Request path must be absolute and not contain "..".
+		if (
+			requestPath.empty()
+			|| requestPath[0] != '/'
+			|| requestPath.find("..") != std::string::npos
+		) {
+			std::cout << "request path error" << std::endl;
+			response = HttpResponse::defaultResponse(HttpResponse::bad_request);
+			return;
+		}
+
+		// Check correct query string
+		if (requestPath.find("/?ua=") != std::string::npos) {
+			std::cout << "query string error" << std::endl;
+			response = HttpResponse::defaultResponse(HttpResponse::bad_request);
+			return;
+		}
+
+		response.status = HttpResponse::ok;
+		response.headers. resize(2);
+		response.headers[0].name = "Content-Length";
+		response.headers[0].value = boost::lexical_cast<std::string>(0);
+		response.headers[1].name = "Content-Type";
+		response.headers[1].value = "plain/text";
 	}
 
 	bool RequestHandler::urlDecode(const std::string& in, std::string& out)
