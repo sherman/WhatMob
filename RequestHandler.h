@@ -29,7 +29,7 @@ namespace http {
 		};
 
 		typedef Trie<Device> UserAgentPrefix;
-
+		
 		boost::shared_ptr<UserAgentPrefix> prefixesBase_;
 
 		static bool urlDecode(const std::string& in, std::string& out);
