@@ -37,7 +37,7 @@ namespace http {
 		}
 
 		// Check correct query string
-		if (requestPath.find("/?ua=") != std::string::npos) {
+		if (requestPath.find("/?ua=") != 0) {
 			std::cout << "query string error" << std::endl;
 			response = HttpResponse::defaultResponse(HttpResponse::bad_request);
 			return;
