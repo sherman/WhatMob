@@ -5,11 +5,12 @@
 #include <boost/lexical_cast.hpp>
 #include "HttpResponse.h"
 #include "HttpRequest.h"
+#include "DeviceData.h"
 
 namespace http {
 	namespace server {
 
-	RequestHandler::RequestHandler() :  prefixesBase_(new UserAgentPrefix())
+	RequestHandler::RequestHandler() :  prefixesBase_(new DeviceTrie())
 	{
 		initPrefixBase();
 	}
@@ -115,18 +116,17 @@ namespace http {
 
 	void RequestHandler::initPrefixBase()
 	{
-		// sample data
-		Device d1;
-		d1.modelId			= 1;
-		d1.brandId			= 1;
-		d1.mobileDevice		= true;
+	    // FIXME: load from file here
+	    std::string input;
 
-		std::string s1("nokia");
-		std::string s2("nok");
+	    DeviceDataParser parser(prefixesBase_);
 
-		prefixesBase_->insert(s1, d1);
-		prefixesBase_->insert(s2, d1);
+	    parse_info<> info = boost::spirit::parse(input.c_str(), parser, nothing_p);
+
+	    if (!info.hit) {
+		// handle error from parser here
+	    }
 	}
-	
+		
 	}
 }

@@ -4,7 +4,7 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include "Trie.h"
+#include "DeviceData.h"
 
 namespace http {
 	namespace server {
@@ -19,18 +19,7 @@ namespace http {
 		explicit RequestHandler();
 		void handleRequest(const HttpRequest& request, HttpResponse& response);
 	private:
-		struct Device
-		{
-			Device() : modelId(0), brandId(0), mobileDevice(false) {/*_*/}
-
-			int modelId;
-			int brandId;
-			bool mobileDevice;
-		};
-
-		typedef Trie<Device> UserAgentPrefix;
-		
-		boost::shared_ptr<UserAgentPrefix> prefixesBase_;
+		boost::shared_ptr<DeviceTrie> prefixesBase_;
 
 		static bool urlDecode(const std::string& in, std::string& out);
 		void initPrefixBase();
