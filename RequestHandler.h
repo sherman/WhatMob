@@ -12,7 +12,6 @@ namespace http {
 	struct HttpResponse;
 	struct HttpRequest;
 
-
 	class RequestHandler : private boost::noncopyable
 	{
 	public:
@@ -23,6 +22,8 @@ namespace http {
 
 		static bool urlDecode(const std::string& in, std::string& out);
 		void initPrefixBase();
+
+		static const std::string BASE_FILENAME;
 	};
 
 	}

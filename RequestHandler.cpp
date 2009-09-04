@@ -1,5 +1,6 @@
 #include "RequestHandler.h"
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <boost/lexical_cast.hpp>
@@ -9,6 +10,8 @@
 
 namespace http {
     namespace server {
+
+	 const std::string RequestHandler::BASE_FILENAME = "prefixes";
 
 	RequestHandler::RequestHandler() :  prefixesBase_(new DeviceTrie())
 	{
@@ -118,19 +121,28 @@ namespace http {
 	{
 	    using namespace boost::spirit::classic;
 	    
-	    // FIXME: load from file here
 	    std::string input;
 
 	    DeviceDataParser parser(*prefixesBase_);
 
-	    parse_info<> info = parse(
-		input.c_str(),
-		parser,
-		nothing_p
-	    );
+	    std::ifstream prefixesFile(BASE_FILENAME.c_str());
 
-	    if (!info.hit) {
-		// handle error from parser here
+	    if (prefixesFile.is_open()) {
+		while (!prefixesFile.eof()) {
+		    getline(prefixesFile, input);
+
+		    parse_info<> info = parse(
+			input.c_str(),
+			parser,
+			nothing_p
+		    );
+
+		    if (!info.hit) {
+			// handle error from parser here
+		    }
+		}
+    
+		prefixesFile.close();
 	    }
 	}
 		
