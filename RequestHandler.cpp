@@ -55,10 +55,10 @@ namespace http {
 
 		TrieNode<Device> *node = prefixesBase_->find(userAgent);
 
-		std::cout << "ua:" << userAgent << std::endl;
+		//std::cout << "ua:" << userAgent << std::endl;
 
 		if (node) {
-			std::cout << "ua recognized" << std::endl;
+			//std::cout << "ua recognized" << std::endl;
 
 			// FIXME: optimize it ?
 			char buf[32];
@@ -74,8 +74,8 @@ namespace http {
 			);
 
 			response.content.append(buf);
-		} else
-			std::cout << "unknown ua" << std::endl;
+		}/* else
+			std::cout << "unknown ua" << std::endl;*/
 
 		response.status = HttpResponse::ok;
 		response.headers. resize(2);
