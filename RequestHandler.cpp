@@ -8,7 +8,7 @@
 #include "DeviceData.h"
 
 namespace http {
-	namespace server {
+    namespace server {
 
 	RequestHandler::RequestHandler() :  prefixesBase_(new DeviceTrie())
 	{
@@ -121,12 +121,16 @@ namespace http {
 
 	    DeviceDataParser parser(prefixesBase_);
 
-	    parse_info<> info = boost::spirit::parse(input.c_str(), parser, nothing_p);
+	    boost::spirit::classic::parse_info<> info =
+		boost::spirit::classic::parse(
+		    input.c_str(),
+		    parser, nothing_p
+		   );
 
 	    if (!info.hit) {
 		// handle error from parser here
 	    }
 	}
 		
-	}
+    }
 }
