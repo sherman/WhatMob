@@ -116,16 +116,18 @@ namespace http {
 
 	void RequestHandler::initPrefixBase()
 	{
+	    using namespace boost::spirit::classic;
+	    
 	    // FIXME: load from file here
 	    std::string input;
 
-	    DeviceDataParser parser(prefixesBase_);
+	    DeviceDataParser parser(*prefixesBase_);
 
-	    boost::spirit::classic::parse_info<> info =
-		boost::spirit::classic::parse(
-		    input.c_str(),
-		    parser, nothing_p
-		   );
+	    parse_info<> info = parse(
+		input.c_str(),
+		parser,
+		nothing_p
+	    );
 
 	    if (!info.hit) {
 		// handle error from parser here
