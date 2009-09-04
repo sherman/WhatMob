@@ -58,7 +58,7 @@
 				model = int_p;
 				brand = int_p;
 				mobileDevice = int_p;
-				prefix = *alnum_p;
+				prefix = *anychar_p;
 
 				dataString = (
 					model >> ch_p(',') >>
