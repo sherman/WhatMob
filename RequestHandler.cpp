@@ -138,7 +138,7 @@ namespace http {
 		    );
 
 		    if (!info.hit) {
-			// handle error from parser here
+			std::cout << "E:" <<  input.c_str() << std::endl;
 		    }
 		}
     
