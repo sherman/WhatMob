@@ -25,7 +25,7 @@
 			std::string row(first, last);
 
 			std::vector<std::string> strVector;
-			boost::split(strVector, row, boost::is_any_of(","));
+			boost::split(strVector, row, boost::is_any_of("\t"));
 
 			assert(strVector.size() == 4);
 
@@ -58,12 +58,12 @@
 				model = int_p;
 				brand = int_p;
 				mobileDevice = int_p;
-				prefix = *anychar_p;
+				prefix = *(~ch_p('\n'));
 
 				dataString = (
-					model >> ch_p(',') >>
-					brand >> ch_p(',') >>
-					mobileDevice >> ch_p(',') >>
+					model >> ch_p('\t') >>
+					brand >> ch_p('\t') >>
+					mobileDevice >> ch_p('\t') >>
 					prefix
 				)[CreateDevice(self.trie_)];
 			}
