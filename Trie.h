@@ -11,10 +11,13 @@
 	{
 		public:
 			TrieNode(const T& object) : terminal_(false), object_(object) {}
-			TrieNode() : terminal_(false), object_() {}
+			TrieNode() : terminal_(false), object_(0) {}
 
 			inline bool isTerminal() { return terminal_; }
 			void setTerminal(bool orly) { terminal_ = orly; }
+
+			const T* getObject() { return &object_; }
+			void setObject(const T& object) { object_ = object; }
 
 			bool hasChild(char value) const
 			{
@@ -24,11 +27,9 @@
 			TrieNode* addChild(char value, const T& object)
 			{
 				if (!hasChild(value)) {
-					childNodes_[value] = TrieNode(object);
-				} else {
-					TrieNode *tmp = getChild(value);
-					tmp->object_ = object;
-				}
+					childNodes_[value] = TrieNode();
+				} else
+					object_ = object;
 				
 				return getChild(value);
 			}
@@ -38,7 +39,10 @@
 				return &childNodes_[value];
             }
 
-			const T* getObject() { return &object_; }
+			std::map<char, TrieNode>* getChildNodes()
+			{
+				return &childNodes_;
+			}
 		private:
 			bool terminal_;
 			std::map<char, TrieNode> childNodes_;
@@ -67,11 +71,12 @@
         std::string::const_iterator iter = str.begin();
 
         while (iter != str.end()) {
-                current = current->addChild(*iter, object);
-                ++iter;
+			current = current->addChild(*iter, object);
+            ++iter;
         }
 
         current->setTerminal(true);
+		current->setObject(object);
 
 		return current;
 	};
@@ -79,6 +84,9 @@
 	template <class T> TrieNode<T>* Trie<T>::find(const std::string& str) const
 	{
 		TrieNode<T>* current = root_;
+
+		TrieNode<T> lastFound;
+		bool found = false;
 
 		std::string::const_iterator iter = str.begin();
 
@@ -88,11 +96,16 @@
 
 			current = current->getChild(*iter);
 
+			if (current->isTerminal()) {
+				lastFound	= *current;
+				found		= true;
+			}
+
 			++iter;
 		}
 
-		if (current->isTerminal())
-			return current;
+		if (found)
+			return &lastFound;
 		else
 			return 0;
 	}
