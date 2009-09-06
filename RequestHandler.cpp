@@ -53,17 +53,13 @@ namespace http {
 
 	std::string userAgent = requestPath.substr(5);
 
-	TrieNode<Device> *node = prefixesBase_->find(userAgent);
+	TrieNode<Device> result;
 
-	//std::cout << "ua:" << userAgent << std::endl;
-
-	if (node) {
-	    //std::cout << "ua recognized" << std::endl;
-
+	if (prefixesBase_->find(userAgent, result)) {
 	    // FIXME: optimize it ?
 	    char buf[32];
 
-	    Device* d = const_cast<Device*>(node->getObject());
+	    Device* d = const_cast<Device*>(result.getObject());
 
 	    sprintf(
 		buf,

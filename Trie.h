@@ -56,7 +56,7 @@
 			Trie() : root_(new TrieNode<T>()) {}
 
 			TrieNode<T> *insert(const std::string&, const T&);
-			TrieNode<T> *find(const std::string&) const;
+			bool find(const std::string&, TrieNode<T>& result) const;
 		private:
 			TrieNode<T>* root_;
 	};
@@ -81,11 +81,13 @@
 		return current;
 	};
 
-	template <class T> TrieNode<T>* Trie<T>::find(const std::string& str) const
+	template <class T> bool Trie<T>::find(
+		const std::string& str,
+		TrieNode<T>& result
+	) const
 	{
 		TrieNode<T>* current = root_;
 
-		TrieNode<T> lastFound;
 		bool found = false;
 
 		std::string::const_iterator iter = str.begin();
@@ -97,17 +99,14 @@
 			current = current->getChild(*iter);
 
 			if (current->isTerminal()) {
-				lastFound	= *current;
-				found		= true;
+				result	= *current;
+				found	= true;
 			}
 
 			++iter;
 		}
 
-		if (found)
-			return &lastFound;
-		else
-			return 0;
+		return found;
 	}
 
 #endif	/* _TRIE_H */
