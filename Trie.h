@@ -11,7 +11,7 @@
 	{
 		public:
 			TrieNode(const T& object) : terminal_(false), object_(object) {}
-			TrieNode() : terminal_(false), object_(0) {}
+			TrieNode() : terminal_(false), object_() {}
 
 			inline bool isTerminal() { return terminal_; }
 			void setTerminal(bool orly) { terminal_ = orly; }
