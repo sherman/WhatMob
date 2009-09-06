@@ -78,12 +78,15 @@ namespace http {
 	    std::cout << "unknown ua" << std::endl;*/
 
 	response.status = HttpResponse::ok;
-	response.headers. resize(2);
+	response.headers.resize(3);
 	response.headers[0].name = "Content-Length";
 	response.headers[0].value =
-	boost::lexical_cast<std::string>(response.content.size());
+	    boost::lexical_cast<std::string>(response.content.size());
 	response.headers[1].name = "Content-Type";
 	response.headers[1].value = "text/html";
+	// FIXME: for the test
+	response.headers[2].name = "Device-data";
+	response.headers[2].value = response.content;
     }
 
     bool RequestHandler::urlDecode(const std::string& in, std::string& out)
