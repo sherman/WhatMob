@@ -23,7 +23,13 @@
 
 			TrieNode* addChild(char value, const T& object)
 			{
-				childNodes_[value] = TrieNode(object);
+				if (!hasChild(value)) {
+					childNodes_[value] = TrieNode(object);
+				} else {
+					TrieNode *tmp = getChild(value);
+					tmp->object_ = object;
+				}
+				
 				return getChild(value);
 			}
 
