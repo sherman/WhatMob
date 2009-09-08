@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <vector>
 
 	template <class T>
 	class TrieNode
@@ -56,7 +57,7 @@
 			Trie() : root_(new TrieNode<T>()) {}
 
 			TrieNode<T> *insert(const std::string&, const T&);
-			bool find(const std::string&, TrieNode<T>& result) const;
+			TrieNode<T> *find(const std::string&) const;
 		private:
 			TrieNode<T>* root_;
 	};
@@ -81,13 +82,13 @@
 		return current;
 	};
 
-	template <class T> bool Trie<T>::find(
-		const std::string& str,
-		TrieNode<T>& result
+	template <class T> TrieNode<T>* Trie<T>::find(
+		const std::string& str
 	) const
 	{
 		TrieNode<T>* current = root_;
 
+		std::vector<TrieNode<T>*> foundNodes;
 		bool found = false;
 
 		std::string::const_iterator iter = str.begin();
@@ -99,14 +100,17 @@
 			current = current->getChild(*iter);
 
 			if (current->isTerminal()) {
-				result	= *current;
-				found	= true;
+				foundNodes.push_back(current);
+				found = true;
 			}
 
 			++iter;
 		}
-
-		return found;
+		
+		if (found)
+			return nodePointers.back();
+		else
+			return 0;
 	}
 
 #endif	/* _TRIE_H */
