@@ -26,7 +26,7 @@ namespace http {
 
 			std::string buf(begin, end);
 
-			boost::regex getUserAgentRequest("^GET (.+) HTTP");
+			boost::regex getUserAgentRequest("^GET (/[?]ua=.+) HTTP");
 
 			if (boost::regex_search(buf, result, getUserAgentRequest)) {
 				if (result.size() == 2) {
