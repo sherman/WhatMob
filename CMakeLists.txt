@@ -14,4 +14,4 @@ ADD_EXECUTABLE(
 	DeviceData.cpp
 )
 
-TARGET_LINK_LIBRARIES(deviceatlas boost_system boost_thread)
+TARGET_LINK_LIBRARIES(deviceatlas boost_system boost_thread boost_regex)

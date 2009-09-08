@@ -27,29 +27,11 @@ namespace http {
 			std::string requestPath;
 
 			if (!urlDecode(request.uri, requestPath)) {
-				std::cout << "decode error" << std::endl;
+				std::cout << "decode uri error" << std::endl;
 				response = HttpResponse::defaultResponse(HttpResponse::bad_request);
 				return;
 			}
-
-			// Request path must be absolute and not contain "..".
-			if (
-				requestPath.empty()
-				|| requestPath[0] != '/'
-				|| requestPath.find("..") != std::string::npos
-			) {
-				std::cout << "request path error" << std::endl;
-				response = HttpResponse::defaultResponse(HttpResponse::bad_request);
-				return;
-			}
-
-			// Check correct query string
-			if (requestPath.find("/?ua=") != 0) {
-				std::cout << "query string error" << std::endl;
-				response = HttpResponse::defaultResponse(HttpResponse::bad_request);
-				return;
-			}
-
+			
 			std::string userAgent = requestPath.substr(5);
 
 			TrieNode<Device> result;
@@ -65,7 +47,7 @@ namespace http {
 			response.headers[0].value =
 				boost::lexical_cast<std::string>(response.content.size());
 			response.headers[1].name = "Content-Type";
-			response.headers[1].value = "plain/text";
+			response.headers[1].value = "text/html";
 			// FIXME: for the test
 			response.headers[2].name = "Device-data";
 			response.headers[2].value = response.content;

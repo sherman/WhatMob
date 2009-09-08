@@ -37,8 +37,7 @@ namespace http {
 		)
 		{
 			if (!e) {
-				boost::tribool result;
-				boost::tie(result, boost::tuples::ignore) = requestParser_.parse(
+				bool result = requestParser_.isValidRequest(
 					request_,
 					buffer_.data(),
 					buffer_.data() + bytes_transferred
