@@ -12,6 +12,7 @@ namespace http {
     namespace server {
 
 		const std::string RequestHandler::BASE_FILENAME = "prefixes";
+		const std::string RequestHandler::UNKNOWN_RESPONSE = "Unknown user-agent";
 
 		RequestHandler::RequestHandler() :  prefixesBase_(new DeviceTrie())
 		{
@@ -53,10 +54,10 @@ namespace http {
 
 			TrieNode<Device> result;
 
-			if (prefixesBase_->find(userAgent, result)) {
+			if (prefixesBase_->find(userAgent, result))
 				createResponse(response, result);
-			}/* else
-				std::cout << "unknown ua" << std::endl;*/
+			else
+				response.content.append(UNKNOWN_RESPONSE.c_str());
 
 			response.status = HttpResponse::ok;
 			response.headers.resize(3);
