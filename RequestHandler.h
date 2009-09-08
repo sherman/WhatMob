@@ -22,6 +22,7 @@ namespace http {
 
 		static bool urlDecode(const std::string& in, std::string& out);
 		void initPrefixBase();
+		void createResponse(HttpResponse& response, TrieNode<Device>& node);
 
 		static const std::string BASE_FILENAME;
 	};

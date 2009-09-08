@@ -49,27 +49,12 @@ namespace http {
 				return;
 			}
 
-			response.content.append("Model, Brand, Mobile:");
-
 			std::string userAgent = requestPath.substr(5);
 
 			TrieNode<Device> result;
 
 			if (prefixesBase_->find(userAgent, result)) {
-				// FIXME: optimize it ?
-				char buf[32];
-
-				Device* d = const_cast<Device*>(result.getObject());
-
-				sprintf(
-					buf,
-					"%d, %d, %d",
-					d->modelId,
-					d->brandId,
-					d->mobileDevice
-				);
-
-				response.content.append(buf);
+				createResponse(response, result);
 			}/* else
 				std::cout << "unknown ua" << std::endl;*/
 
@@ -143,6 +128,23 @@ namespace http {
 
 				prefixesFile.close();
 			}
+		}
+
+		void RequestHandler::createResponse(HttpResponse& response, TrieNode<Device>& node)
+		{
+			char buf[128];
+
+			Device* d = const_cast<Device*>(node.getObject());
+
+			sprintf(
+				buf,
+				"model_id:%d;brand_id:%d;mobile_device:%d;",
+				d->modelId,
+				d->brandId,
+				d->mobileDevice
+			);
+
+			response.content.append(buf);
 		}
     }
 }
