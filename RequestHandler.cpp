@@ -34,10 +34,10 @@ namespace http {
 			
 			std::string userAgent = requestPath.substr(5);
 
-			TrieNode<Device> result;
+			TrieNode<Device> *result = prefixesBase_->find(userAgent);
 
-			if (prefixesBase_->find(userAgent, result))
-				createResponse(response, result);
+			if (result)
+				createResponse(response, *result);
 			else
 				response.content.append(UNKNOWN_RESPONSE.c_str());
 
