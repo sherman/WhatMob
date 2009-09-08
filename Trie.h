@@ -108,7 +108,7 @@
 		}
 		
 		if (found)
-			return nodePointers.back();
+			return foundNodes.back();
 		else
 			return 0;
 	}
