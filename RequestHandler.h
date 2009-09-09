@@ -25,7 +25,6 @@ namespace http {
 		void createResponse(HttpResponse& response, TrieNode<Device>& node);
 
 		static const std::string BASE_FILENAME;
-		static const std::string UNKNOWN_RESPONSE;
 	};
 
 	}

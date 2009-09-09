@@ -12,7 +12,6 @@ namespace http {
     namespace server {
 
 		const std::string RequestHandler::BASE_FILENAME = "prefixes";
-		const std::string RequestHandler::UNKNOWN_RESPONSE = "Unknown user-agent";
 
 		RequestHandler::RequestHandler() :  prefixesBase_(new DeviceTrie())
 		{
@@ -27,7 +26,7 @@ namespace http {
 			std::string requestPath;
 
 			if (!urlDecode(request.uri, requestPath)) {
-				std::cout << "decode uri error" << std::endl;
+				//std::cout << "decode uri error" << std::endl;
 				response = HttpResponse::defaultResponse(HttpResponse::bad_request);
 				return;
 			}
@@ -38,8 +37,10 @@ namespace http {
 
 			if (result)
 				createResponse(response, *result);
-			else
-				response.content.append(UNKNOWN_RESPONSE.c_str());
+			else {
+				response = HttpResponse::defaultResponse(HttpResponse::not_found);
+				return;
+			}
 
 			response.status = HttpResponse::ok;
 			response.headers.resize(3);
@@ -47,7 +48,7 @@ namespace http {
 			response.headers[0].value =
 				boost::lexical_cast<std::string>(response.content.size());
 			response.headers[1].name = "Content-Type";
-			response.headers[1].value = "text/html";
+			response.headers[1].value = "plain/text";
 			// FIXME: for the test
 			response.headers[2].name = "Device-data";
 			response.headers[2].value = response.content;
