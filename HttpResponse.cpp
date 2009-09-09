@@ -106,6 +106,17 @@ namespace HttpResponseMisc {
 	std::vector<boost::asio::const_buffer> HttpResponse::toBuffers()
 	{
 		std::vector<boost::asio::const_buffer> buffers;
+		buffers.push_back(HttpStatusStrings::toBuffer(status));
+
+		for (std::size_t i = 0; i < headers.size(); ++i) {
+			HttpHeader& h = headers[i];
+			buffers.push_back(boost::asio::buffer(h.name));
+			buffers.push_back(boost::asio::buffer(HttpResponseMisc::nameValueSeparator));
+			buffers.push_back(boost::asio::buffer(h.value));
+			buffers.push_back(boost::asio::buffer(HttpResponseMisc::crlf));
+		}
+
+		buffers.push_back(boost::asio::buffer(HttpResponseMisc::crlf));
 		buffers.push_back(boost::asio::buffer(content));
 
 		return buffers;
@@ -249,7 +260,15 @@ namespace defaultResponses {
 	HttpResponse HttpResponse::defaultResponse(HttpResponse::HttpStatus status)
 	{
 		HttpResponse response;
+		response.status = status;
 		response.content = boost::lexical_cast<std::string>(status);
+		response.headers.resize(2);
+		response.headers[0].name = "Content-Length";
+		response.headers[0].value = boost::lexical_cast<std::string >(
+			response.content.size()
+		);
+		response.headers[1].name = "Content-Type";
+		response.headers[1].value = "plain/text";
 
 		return response;
 	}
