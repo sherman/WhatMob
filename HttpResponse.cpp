@@ -262,7 +262,9 @@ namespace defaultResponses {
 		HttpResponse response;
 		response.status = status;
 		response.content = boost::lexical_cast<std::string>(status);
-		response.headers.resize(0);
+		response.headers.resize(1);
+		response.headers[0].name = "Content-Type";
+		response.headers[0].name = "text/plain";
 
 		return response;
 	}
