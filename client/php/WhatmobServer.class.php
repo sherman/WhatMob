@@ -30,7 +30,7 @@
 			$this->port = $port;
 		}
 		
-		public function __destuctor()
+		public function __destruct()
 		{
 			$this->closeConnection();
 		}
