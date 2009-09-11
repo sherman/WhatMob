@@ -45,7 +45,7 @@ namespace http {
 			response.status = HttpResponse::ok;
 			response.headers.resize(1);
 			response.headers[0].name = "Content-Type";
-			response.headers[0].name = "text/plain";
+			response.headers[0].value = "text/plain";
 		}
 
 		bool RequestHandler::urlDecode(const std::string& in, std::string& out)
