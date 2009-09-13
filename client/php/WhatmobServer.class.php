@@ -58,6 +58,11 @@
 			if (!$data)
 				throw new WhatmobServerException('No device was found.');
 				
+			return self::parseDevice($data);
+		}
+		
+		public static function parseDevice($data)
+		{
 			$parts = spliti(';', $data);
 			
 			$properties = array();
