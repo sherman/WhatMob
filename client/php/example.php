@@ -1,5 +1,10 @@
 <?php
+	require './config.inc.php';
+	
 	require './WhatmobServer.class.php';
+	require './WhatmobServerException.class.php';
+	require './WhatmobDevice.class.php';
+	
 	
 	$server = WhatmobServer::create();
 

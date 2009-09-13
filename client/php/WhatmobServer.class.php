@@ -1,7 +1,4 @@
 <?php
-	require './WhatmobDevice.class.php';
-	require './WhatmobServerException.class.php';
-
 	final class WhatmobServer
 	{
 		const DEFAULT_PORT	= 11111;
